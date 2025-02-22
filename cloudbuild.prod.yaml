@@ -13,6 +13,9 @@ steps:
       - --entry-point=$_ENTRY_POINT
     id: DEPLOY
 
+options:
+  logging: CLOUD_LOGGING_ONLY
+
 substitutions:
   _FUNCTION_NAME    : my-nodejs-app
   _FUNCTION_REGION  : northamerica-northeast1
