@@ -1,11 +1,3 @@
-const http = require('http');
-
-const server = http.createServer((req, res) => {
-  res.statusCode = 200;
-  res.setHeader('Content-Type', 'text/plain');
-  res.end('Hello, World!\n');
-});
-
-server.listen(3000, 'localhost', () => {
-  console.log('Server running at http://localhost:3000/ v1.0');
-});
+exports.helloworld = (req, res) => {
+  res.send('Hello, World! v1.0');
+};
