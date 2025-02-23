@@ -5,6 +5,7 @@ steps:
       - functions
       - deploy
       - $_FUNCTION_NAME
+      - --allow-unauthenticated
       - --region=$_FUNCTION_REGION
       - --source=.
       - --trigger-http
