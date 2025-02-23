@@ -15,7 +15,7 @@ steps:
       - $_SERVICE_NAME
       - --project=$_SERVICE_PROJECT
       - --region=$_SERVICE_REGION
-      - --image
+      - --image=$_SERVICE_IMAGE
     id: DEPLOY
 
 options:
