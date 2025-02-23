@@ -1,26 +1,31 @@
 steps:
-  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', '$_SERVICE_IMAGE', '.']
+    id: BUILD
+
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', '$_SERVICE_IMAGE']
+    id: PUSH
+    
+  - name: 'gcr.io/cloud-builders/gcloud'
     args:
-      - gcloud
-      - functions
-      - deploy
-      - $_FUNCTION_NAME
-      - --allow-unauthenticated
-      - --region=$_FUNCTION_REGION
-      - --source=.
-      - --trigger-http
-      - --runtime=$_FUNCTION_RUNTIME
-      - --project=$_FUNCTION_PROJECT
-      - --entry-point=$_ENTRY_POINT
+      - run
+      - services
+      - update
+      - $_SERVICE_NAME
+      - --project=$_SERVICE_PROJECT
+      - --region=$_SERVICE_REGION
+      - --image
     id: DEPLOY
 
 options:
   logging: CLOUD_LOGGING_ONLY
 
 substitutions:
-  _FUNCTION_NAME    : my-nodejs-app
-  _FUNCTION_REGION  : northamerica-northeast1
-  _FUNCTION_RUNTIME : nodejs22
-  _FUNCTION_PROJECT : prod-451318
-  _ENTRY_POINT      : helloworld
+  _SERVICE_IMAGE   : us-central1-docker.pkg.dev/${PROJECT_ID}/${_DOCKER_REGISTRY}/${_DOCKER_IMAGENAME}:${SHORT_SHA}
+  _SERVICE_NAME    : hello
+  _SERVICE_REGION  : us-central1
+  _SERVICE_PROJECT : prod-451318
+  _DOCKER_REGISTRY : denis-docker
+  _DOCKER_IMAGENAME: mynginx-app
   
